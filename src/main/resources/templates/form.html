@@ -11,52 +11,32 @@
 
 </head>
 <body>
-	<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-		<div class="container-fluid">
-			<a class="navbar-brand" href="#">Spring Boot</a>
-			<button class="navbar-toggler" type="button"
-				data-bs-toggle="collapse" data-bs-target="#navbarNav"
-				aria-controls="navbarNav" aria-expanded="false"
-				aria-label="Toggle navigation">
-				<span class="navbar-toggler-icon"></span>
-			</button>
-			<div class="collapse navbar-collapse" id="navbarNav">
-				<ul class="navbar-nav">
-					<li class="nav-item"><a class="nav-link active"
-						aria-current="page" href="#">Home</a></li>
-					<li class="nav-item"><a class="nav-link" th:href="@{/listar}">Clientes</a>
-					</li>
-				</ul>
-			</div>
-		</div>
-	</nav>
+
 	<div class="container">
 		<h1
 			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
 			th:text="${titulo}"></h1>
-		<a th:href="@{/form}"> Crear Cliente</a>
-		<table class="table table-striped">
-			<thead>
+		<form th:action="@{/form}" th:object="${cliente}" method="post">
+			<table>
 				<tr>
-					<th>ID</th>
-					<th>NOMBRE</th>
-					<th>APELLIDO</th>
-					<th>EMAIL</th>
-					<th>FECHA</th>
+					<td>NOMBRE</td>
+					<td><input type="text" th:field="*{nombre}" /></td>
 				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="cliente : ${clientes}">
-					<td th:text="${cliente.id}"></td>
-					<td th:text="${cliente.nombre}"></td>
-					<td th:text="${cliente.apellido}"></td>
-					<td th:text="${cliente.email}"></td>
-					<td th:text="${cliente.createAt}"></td>
+				<tr>
+					<td>APELLIDO</td>
+					<td><input type="text" th:field="*{apellido}" /></td>
 				</tr>
-			</tbody>
-		</table>
+				<tr>
+					<td>EMAIL</td>
+					<td><input type="email" th:field="*{email}" /></td>
+				</tr>
+				<tr>
+					<td><input type="submit" value="Crear Cliente" /></td>
+				</tr>
+			</table>
+			<input type="hidden" th:field="*{id}" />
+		</form>
 	</div>
-
 	<script
 		src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
 		integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU"
