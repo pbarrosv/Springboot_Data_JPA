@@ -8,36 +8,37 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.springboot.datajpa.dao.IClienteDao;
 import com.springboot.datajpa.model.Cliente;
+import com.springboot.datajpa.repository.IClienteRepository;
 
 @Service
 public class ClienteServiceImpl implements IClienteService{
 
 	@Autowired
-	private IClienteDao clienteDao;
+	private IClienteRepository clienterepo;
 	
 	@Transactional(readOnly = true)
 	@Override
 	public List<Cliente> findAllClie() {
-		return clienteDao.findAllClie();
+		return (List<Cliente>)clienterepo.findAll();
 	}
 
 	@Override
 	@Transactional
 	public void save(Cliente cliente) {
-		clienteDao.save(cliente);
+		clienterepo.save(cliente);
 		
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Cliente findOne(Long id) {		
-		return clienteDao.findOne(id);
+		return clienterepo.findById(id).orElse(null);
 	}
 
 	@Override
 	@Transactional
 	public void delete(Long id) {
-		clienteDao.delete(id);
+		clienterepo.deleteById(id);
 		
 	}
 
