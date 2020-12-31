@@ -17,18 +17,19 @@ import org.springframework.web.bind.support.SessionStatus;
 
 import com.springboot.datajpa.dao.IClienteDao;
 import com.springboot.datajpa.model.Cliente;
+import com.springboot.datajpa.service.IClienteService;
 
 @Controller
 @SessionAttributes("cliente")
 public class ClienteController {
 	
 	@Autowired
-	private IClienteDao clienteDao;
+	private IClienteService clienteService;
 	
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listarClientes(Model model) {
 		model.addAttribute("titulo","Listado de Clientes");
-		model.addAttribute("clientes",clienteDao.findAllClie());
+		model.addAttribute("clientes",clienteService.findAllClie());
 		return "listar";
 	}
 	
@@ -47,7 +48,7 @@ public class ClienteController {
 		Cliente cliente = null;
 		
 		if(id>0) {
-			cliente = clienteDao.findOne(id);
+			cliente = clienteService.findOne(id);
 		} else {
 			return "redirect:listar";
 		}
@@ -65,7 +66,7 @@ public class ClienteController {
 			return "form";
 		}
 		
-		clienteDao.save(cliente);
+		clienteService.save(cliente);
 		status.setComplete();
 		return "redirect:listar";
 	}
@@ -73,7 +74,7 @@ public class ClienteController {
 	@RequestMapping(value="/eliminar/{id}")
 	public String eliminar(@PathVariable(value="id") Long id) {
 		if(id>0) {
-			clienteDao.delete(id);
+			clienteService.delete(id);
 		}
 		return"redirect:/listar";
 	}
