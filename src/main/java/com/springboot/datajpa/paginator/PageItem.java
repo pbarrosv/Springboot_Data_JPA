@@ -8,5 +8,14 @@ public class PageItem {
 		this.numero = numero;
 		this.actual = actual;
 	}
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public boolean isActual() {
+		return actual;
+	}
+	
 	
 }

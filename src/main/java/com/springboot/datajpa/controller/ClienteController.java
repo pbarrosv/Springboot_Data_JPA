@@ -22,6 +22,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.springboot.datajpa.dao.IClienteDao;
 import com.springboot.datajpa.model.Cliente;
+import com.springboot.datajpa.paginator.PageRender;
 import com.springboot.datajpa.service.IClienteService;
 
 @Controller
@@ -34,13 +35,14 @@ public class ClienteController {
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
 	public String listarClientes(@RequestParam(name = "page", defaultValue = "0")int page, Model model) {
 		
-		Pageable pageRequest = PageRequest.of(0, 4);
+		Pageable pageRequest = PageRequest.of(page, 5);
 		
 		Page<Cliente> clientes = clienteService.findAll(pageRequest);
 
-		
+		PageRender<Cliente> pageRender = new PageRender<>("/listar", clientes);
 		model.addAttribute("titulo","Listado de Clientes");
 		model.addAttribute("clientes",clientes);
+		model.addAttribute("page",pageRender);
 		return "listar";
 	}
 	
